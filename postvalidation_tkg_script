@@ -1,0 +1,54 @@
+#!/bin/bash
+set -e
+ 
+echo ""
+echo "------ Listing the Management cluster & workload cluster state -------"
+echo ""
+tanzu cluster list --include-management-cluster -A
+echo ""
+ 
+echo "------ Listing the node status ----------"
+echo ""
+kubectl get nodes -o wide
+echo ""
+ 
+echo "------ Listing the tanzu packages status ---------"
+echo ""
+tanzu package installed list -A
+echo ""
+ 
+echo "------ Checking the Management cluster state with all details ---------"
+echo ""
+tanzu mc get
+echo ""
+ 
+echo "------ Check the state of vSphere Machines on the Management cluster and workload nodes --------"
+echo ""
+kubectl get machines -A
+echo ""
+ 
+echo "------ Check the pod status -----------------------"
+echo ""
+kubectl get pods -A
+echo ""
+ 
+echo "------ Check the deployemnts, services & ingress ---------"
+echo ""
+kubectl get deployments,svc,ing -A
+echo ""
+ 
+echo "------ Check the recent events on the cluster ---------"
+echo ""
+kubectl get events -A
+echo ""
+ 
+echo "------ Check the states of cluster -------"
+echo ""
+kubectl get clusters -A
+echo ""
+ 
+echo "------ Check the TKG version deployed on Management Cluster -------"
+echo ""
+kubectl get clusters -n tkg-system -o yaml|grep  TKGVERSION
+
+ 
